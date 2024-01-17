@@ -46,3 +46,7 @@ typer==0.9.0
 
 # Deployment
 anyscale==0.5.131
+
+# Generative AI
+openai==0.27.8
+tqdm==4.65.0
