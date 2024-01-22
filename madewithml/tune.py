@@ -5,13 +5,9 @@ import os
 import ray
 import typer
 from ray import tune
-from ray.air.config import (
-    CheckpointConfig,
-    DatasetConfig,
-    RunConfig,
-    ScalingConfig,
-)
+from ray.air.config import CheckpointConfig, RunConfig, ScalingConfig
 from ray.air.integrations.mlflow import MLflowLoggerCallback
+from ray.train import DataConfig
 from ray.train.torch import TorchTrainer
 from ray.tune import Tuner
 from ray.tune.schedulers import AsyncHyperBandScheduler
@@ -82,10 +78,8 @@ def tune_models(
     train_loop_config["num_classes"] = len(tags)
 
     # Dataset config
-    dataset_config = {
-        "train": DatasetConfig(fit=False, transform=False, randomize_block_order=False),
-        "val": DatasetConfig(fit=False, transform=False, randomize_block_order=False),
-    }
+    options = ray.data.ExecutionOptions(preserve_order=True)
+    dataset_config = DataConfig(datasets_to_split=["train"], execution_options=options)
 
     # Preprocess
     preprocessor = data.CustomPreprocessor()

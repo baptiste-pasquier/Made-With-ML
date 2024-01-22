@@ -50,7 +50,7 @@ version = "0.1.0"
 description = ""
 authors = ["Baptiste Pasquier <pasquierbaptiste@hotmail.fr>"]
 readme = "README.md"
-
+packages = [{ include = "madewithml" }]
 [tool.poetry.dependencies]
 python = "^3.10"
 hyperopt = "0.2.7"
